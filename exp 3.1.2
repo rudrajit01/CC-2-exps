@@ -1,0 +1,34 @@
+class Solution {
+public:
+    int solve(int i, vector<int>& height, int k, vector<int>& dp) {
+        // Base case
+        if (i == 0)
+            return 0;
+
+        // Already calculated
+        if (dp[i] != -1)
+            return dp[i];
+
+        int minCost = INT_MAX;
+
+        // Try all jumps from 1 to k
+        for (int j = 1; j <= k; j++) {
+            if (i - j >= 0) {
+                int cost = solve(i - j, height, k, dp)
+                         + abs(height[i] - height[i - j]);
+
+                minCost = min(minCost, cost);
+            }
+        }
+
+        return dp[i] = minCost;
+    }
+
+    int frogJump(vector<int>& height, int k) {
+        int n = height.size();
+
+        vector<int> dp(n, -1);
+
+        return solve(n - 1, height, k, dp);
+    }
+};
