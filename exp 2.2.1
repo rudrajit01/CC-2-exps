@@ -1,0 +1,26 @@
+class Solution {
+public:
+    TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+        
+        // If root is NULL, p or q is found
+        if (root == NULL || root == p || root == q) {
+            return root;
+        }
+
+        // Search in left and right subtree
+        TreeNode* left = lowestCommonAncestor(root->left, p, q);
+        TreeNode* right = lowestCommonAncestor(root->right, p, q);
+
+        // p and q are on different sides
+        if (left != NULL && right != NULL) {
+            return root;
+        }
+
+        // Return whichever side contains p or q
+        if (left != NULL) {
+            return left;
+        }
+
+        return right;
+    }
+};
