@@ -1,0 +1,65 @@
+#include <iostream>
+using namespace std;
+
+// Definition of TreeNode
+struct TreeNode {
+    int val;
+    TreeNode* left;
+    TreeNode* right;
+
+    TreeNode(int x) {
+        val = x;
+        left = NULL;
+        right = NULL;
+    }
+};
+
+class Solution {
+public:
+    TreeNode* inorderSuccessor(TreeNode* root, TreeNode* p) {
+        TreeNode* successor = NULL;
+
+        while (root != NULL) {
+            if (p->val < root->val) {
+                successor = root;
+                root = root->left;
+            }
+            else {
+                root = root->right;
+            }
+        }
+
+        return successor;
+    }
+};
+
+int main() {
+    // Creating BST
+    //
+    //         5
+    //        / \
+    //       3   6
+    //      / \
+    //     2   4
+
+    TreeNode* root = new TreeNode(5);
+    root->left = new TreeNode(3);
+    root->right = new TreeNode(6);
+    root->left->left = new TreeNode(2);
+    root->left->right = new TreeNode(4);
+
+    // p = 3
+    TreeNode* p = root->left;
+
+    Solution obj;
+
+    TreeNode* result = obj.inorderSuccessor(root, p);
+
+    if (result != NULL)
+        cout << "Inorder Successor of " << p->val
+             << " is " << result->val << endl;
+    else
+        cout << "Inorder Successor does not exist." << endl;
+
+    return 0;
+}
